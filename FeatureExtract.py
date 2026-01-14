@@ -1,3 +1,4 @@
+# Checking the periodicity of AAAA within a sequence (in footprint DNA)
 def GetF(seq):
     ls=[]
     for i in range(0,140):
@@ -14,7 +15,8 @@ def GetF(seq):
             ls.append(i)
     c1=len(ls)
     return [c,c1]
-    
+
+# Extracting statistical features from a DNA sequence based on a sequence pattern (in footprint DNA)
 def FeatureExtract(PTR,REF,dis):
     from statistics import stdev
     P=len(PTR)
@@ -39,6 +41,7 @@ def FeatureExtract(PTR,REF,dis):
             STD=stdev(ls)
     return [TN,AVG,STD,FLG10,FLG10,FLG10]
 
+# Extracting position-based features from a DNA sequence based on a sequence pattern (in footprint DNA)
 def PositionFeatures(PTR,REF,dis,PT):
     P=len(PTR)
     R=len(REF)
@@ -51,6 +54,7 @@ def PositionFeatures(PTR,REF,dis,PT):
                 PT[i-70]=1
     return PT
 
+# Extracting statistical features from a DNA sequence based on a sequence pattern (in flanking DNA)
 def FeatureExtractL(PTR,REF,dis):
     from statistics import stdev
     P=len(PTR)
@@ -80,6 +84,7 @@ def FeatureExtractL(PTR,REF,dis):
             STD=stdev(ls)    
     return [TN,AVG,STD,FLG10,FLG10,FLG10]
 
+# Extracting position-based features from a DNA sequence based on a sequence pattern (in flanking linker DNA)
 def PositionFeaturesL(PTR,REF,dis,PT):
     P=len(PTR)
     R=len(REF)
