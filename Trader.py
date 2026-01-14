@@ -1,3 +1,4 @@
+# Dividing the data into training and test sets
 def GetData(DSN):
     DT1=open('Data/'+DSN+'.txt','r')
     DT=DT1.readlines()
@@ -22,6 +23,7 @@ def GetData(DSN):
         TEDL.append(float(k[-1]))
     return TRDT,TEDT,TRDL,TEDL
 
+# Creating the initial population of candidate solutions
 def initial(nob,F,NOF):
     branches=np.zeros([nob,NOF+3])
     for i in range(0,nob):
@@ -30,7 +32,7 @@ def initial(nob,F,NOF):
         branches[i][NOF-1]=nob
     return branches
 
-
+# Calculating the fitness of candidate solutions
 def score(ARG):
     inx=ARG[0]
     CS=ARG[1]
@@ -56,7 +58,7 @@ def score(ARG):
     print(RMSD)
     SL.append([inx,sqrt(RMSD/len(TD))])
 
-
+# Use parallel processing to calculate the fitness of candidate solutions
 def profit(branches):
     r=len(branches)
     b=len(branches[0])
@@ -73,7 +75,7 @@ def profit(branches):
         branches[SL[i][0]][b-1]=SL[i][1]
     return branches
 
-
+# Select the best candidates from the candidate solutions
 def SelectBests(branches,nog):
     bests=[]
     c=len(branches[0])-1
@@ -87,7 +89,7 @@ def SelectBests(branches,nog):
         bests.append(inx)
     return bests
 
-
+# Divide the candidate solutions into several groups
 def grouping(branches,nog):
     bests=SelectBests(branches,nog)
     c=len(branches[0])-1
@@ -98,7 +100,7 @@ def grouping(branches,nog):
             branches[i][c-2]=bests[random.randint(1,len(bests))-1]
     return branches
 
-
+# Implementation of the Distributing operator in Trader
 def distributing(branches):
     c=len(branches[0])-1
     r=len(branches)
@@ -110,7 +112,7 @@ def distributing(branches):
                 branches[i][s]=branches[int(branches[i][c-2])][s]
     return branches
 
-
+# Implementation of the Retailing operator in Trader
 def retailing(branches,itr,AllF,noi):
     c=len(branches[0])-1
     r=len(branches)
@@ -121,7 +123,7 @@ def retailing(branches,itr,AllF,noi):
             branches[i][s]=int(random.randint(0,AllF-1))
     return branches
 
-
+# Compare modified candidate solutions with their previous states and keep changes that improve fitness
 def CheckImprovments(branches,BR):
     r=len(branches)
     c=len(branches[0])-1
@@ -130,7 +132,7 @@ def CheckImprovments(branches,BR):
             branches[i]=BR[i]
     return branches
 
-
+# Getting the minimum fitness value
 def GetMin(branches):
     c=len(branches[0])-1
     mi=branches[0][c]
@@ -139,7 +141,7 @@ def GetMin(branches):
             mi=branches[i][c]
     return mi
 
-
+# In case of unsuccessful termination, this function recovers the latest state of the candidate solutions 
 def ReadCSs(nob,F,NOF,CR):
     branches=np.zeros([nob,NOF+3])
     F=open('SF/TR_SF_'+str(EXCN)+'_'+str(CR)+'_'+DSN+'.txt','r')
@@ -154,6 +156,10 @@ def ReadCSs(nob,F,NOF,CR):
     F.close()
     return branches
 
+# Implementation of the Trader algorithm to create a candidate feature subset.
+# To run this algorithm, use the following command:
+# python Trader.py RunNumber DatasetName
+# If this is the first run, set RunNumber to 1.
 
 from sklearn import svm
 import numpy as np
@@ -207,4 +213,5 @@ for i in range(CR+1,noi):
         for j in range(0,fi-1):
             F.write(str(branches[i][j])+",")
         F.write(str(branches[i][fi-1])+'\n')
+
     F.close()
