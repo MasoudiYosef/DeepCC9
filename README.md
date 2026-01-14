@@ -13,7 +13,7 @@ To run the <i>Trader</i> algorithm, use the following command:<br>
 
 <br><br> To construct the prediction model, the user can run the following command in the command prompt:<br>
 <B><i>python ResNet.py DatasetName</i></B><br>
-<br><br><br>
+<br>
 
 ## File Descriptions
 
