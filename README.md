@@ -6,7 +6,12 @@ We have developed an interpretable deep learning framework that integrates a nov
 All source codes and datasets have been uploaded to this repository.
 <br><br>
 The FeatureExtract and ObtainFeatures files are used for feature extraction, while ResNet implements the proposed deep residual blocks for predicting Cas9 genome editing efficiency. The Trader.py script is employed to select a potential feature set from the extracted features.
-<br><br> To construct the prediction model, the user can run the following command in the command prompt:<br><br>
+<br><br>
+To run the <i>Trader</i> algorithm, use the following command:<br>
+<b><i> python Trader.py RunNumber DatasetName </i><b><br>
+ If this is the first run, set RunNumber to 1. <br>
+
+<br><br> To construct the prediction model, the user can run the following command in the command prompt:<br>
 <B><i>python ResNet.py DatasetName</i></B><br>
 <br><br><br>
 
