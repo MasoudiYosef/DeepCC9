@@ -1,3 +1,4 @@
+# Structure of a deep residual block
 def basic_block(x, filters, stride=1):
     res = Conv1D(filters, kernel_size=8, strides=stride, padding='same')(x)
     res = BatchNormalization()(res)
@@ -11,6 +12,7 @@ def basic_block(x, filters, stride=1):
     out = Activation('relu')(out)
     return out
 
+# Building the ResNet model
 def build_resnet(input_shape):
     inputs = Input(shape=input_shape)
     x = Conv1D(128, kernel_size=16, strides=1, padding='same')(inputs)
@@ -27,6 +29,7 @@ def build_resnet(input_shape):
     model = Model(inputs=inputs, outputs=outputs)
     return model
 
+#Dividing data into train and test sets
 def Prepare_Data():
     global DS
     F=open(DS+'.txt','r')
@@ -63,6 +66,8 @@ def Prepare_Data():
     TEDT=TEDT.reshape((R2,1,C2,1))
     return TRDT,TEDT,TRDL,TEDL,R1,R2,C1,C2
 
+# Build the prediction model. To run it, use the following command:
+# python ResNet.py DatasetName
 from keras.models import Model
 from keras.layers import Input, Conv1D, BatchNormalization, Activation, Add, GlobalAveragePooling1D, Dense
 import numpy as np
