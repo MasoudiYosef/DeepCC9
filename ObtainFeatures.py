@@ -1,3 +1,4 @@
+# Getting the complementary sequence of a given sequence
 def ComSeq(seq):
     s=''
     seq=seq[::-1]
@@ -12,7 +13,7 @@ def ComSeq(seq):
             s=s+'C'
     return s
 
-
+# Calling the longest common substring function to calculate the similarity score between two sequences
 def SimilarityScore(F,REF1,REF2):
     RE=LCS(REF1,REF2[::-1])
     F=[RE]
@@ -20,18 +21,19 @@ def SimilarityScore(F,REF1,REF2):
     F.append(RE)
     return F
 
-
+# Calling two functions to extract composition- and frequency-based features (footprint DNA)
 def CallFunc(PTR,REF,IDN,PO,dis):
     F=FeatureExtract(PTR,REF,dis)
     PO=PositionFeatures(PTR,REF,IDN,PO)
     return F,PO
 
+# Calling two functions to extract composition- and frequency-based features (flanking linker DNA)
 def CallFuncL(PTR,REF,IDN,PO,dis):
     F=FeatureExtractL(PTR,REF,dis)
     PO=PositionFeaturesL(PTR,REF,IDN,PO)
     return F,PO
 
-
+# Writing features to a text file
 def WriteFeatures(F):
     s=''
     global Fe
