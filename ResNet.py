@@ -2,14 +2,14 @@
 def basic_block(x, filters, stride=1):
     res = Conv1D(filters, kernel_size=8, strides=stride, padding='same')(x)
     res = BatchNormalization()(res)
-    res = Activation('relu')(res)
+    res = Activation('sigmoid')(res)
     res = Conv1D(filters, kernel_size=4, strides=1, padding='same')(res)
     res = BatchNormalization()(res)
     if stride != 1 or x.shape[-1] != filters:
         x = Conv1D(filters, kernel_size=4, strides=stride, padding='same')(x)
         x = BatchNormalization()(x)
     out = Add()([res, x])
-    out = Activation('relu')(out)
+    out = Activation('sigmoid')(out)
     return out
 
 # Building the ResNet model
@@ -17,7 +17,7 @@ def build_resnet(input_shape):
     inputs = Input(shape=input_shape)
     x = Conv1D(128, kernel_size=16, strides=1, padding='same')(inputs)
     x = BatchNormalization()(x)
-    x = Activation('relu')(x)
+    x = Activation('sigmoid')(x)
     x = basic_block(x, filters=32)
     x = basic_block(x, filters=32)
     x = basic_block(x, filters=64, stride=4)
@@ -25,7 +25,7 @@ def build_resnet(input_shape):
     x = basic_block(x, filters=64, stride=4)
     x = basic_block(x, filters=64)
     x = GlobalAveragePooling1D()(x)
-    outputs = Dense(1, activation='relu')(x)
+    outputs = Dense(1, activation='sigmoid')(x)
     model = Model(inputs=inputs, outputs=outputs)
     return model
 
